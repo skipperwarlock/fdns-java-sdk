@@ -1,12 +1,36 @@
 # fdns-java-sdk
-This is the repository with the Java SDK for Foundation Services, will also need to publish to Maven.
+This is the repository with the Java SDK for Foundation Services (FDNS), also available on the [Maven Central Repository](https://maven.apache.org/repository/index.html).
 
-## ----- Start of respository specific READ ME -----
-### This repository specific READ ME instructions go here
+## Usage
+This library is designed to be used with FDNS as helpers to connect to other services.
 
-Replace everything within this section demarcated with “-----“ with material appropriate to your repo that is useful to your developers and users like installation steps, user guide etc.
-## ----- End of respository specific READ ME -----
-  
+Add this line into your `pom.xml` to start using the Swagger UI.
+
+```
+<dependency>
+  <groupId>gov.cdc</groupId>
+  <artifactId>fdns-java-sdk</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+### Helpers
+
+* `AbstractHelper`: An abstract helper which gets extended by the other helpers
+* `AbstractMessageHelper`: A helper for tracing output
+* `CDAHelper`: This is a helper for interfacing with fdns-ms-cda-utils
+* `CombinerHelper`: This is a helper for interfacing with fdns-ms-combiner
+* `DatabaseHelper`: This is a helper for inserting into a SQL database
+* `HL7Helper`: This is a helper for interfacing with fdns-ms-hl7-utils
+* `IndexingHelper`: This is a helper for interfacing with fdns-ms-indexing
+* `MicrosoftHelper`: This is a helper for interfacing with fdns-ms-msft-utils
+* `OAuthHelper`: This is a helper for interfacing with an OAuth 2 provider
+* `ObjectHelper`: This is a helper for interfacing with fdns-ms-object
+* `RequestHelper`: This is a helper for HTTP requests, used by many of the other helpers
+* `ResourceHelper`: This is a helper for accessing application resources such as configuration properties
+* `ScopesHelper`: This is a helper for interfacing with fdns-ms-scopes
+* `StorageHelper`: This is a helper for interfacing with fdns-ms-storage
+
 ## Public Domain
 This repository constitutes a work of the United States Government and is not
 subject to domestic copyright protection under 17 USC § 105. This repository is in

@@ -1,7 +1,9 @@
 package gov.cdc.helper;
 
+import java.io.IOException;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.apache.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -14,6 +16,8 @@ public class ObjectHelper extends AbstractHelper {
 	public final static String CONST_STATUS_INDEXED = "indexed";
 
 	private static ObjectHelper instance;
+	
+	private static final Logger logger = Logger.getLogger(ObjectHelper.class);
 
 	private static String OBJECT_SERVER_URL;
 	private static String CREATE_OBJECT_PATH;
@@ -29,21 +33,21 @@ public class ObjectHelper extends AbstractHelper {
 	private static String DB;
 	private static String COLLECTION;
 
-	public static ObjectHelper getInstance(String authorizationHeader) throws Exception {
+	public static ObjectHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (ObjectHelper) createNew().setAuthorizationHeader(authorizationHeader);
 		else
 			return getInstance();
 	}
 
-	public static ObjectHelper getInstance() throws Exception {
+	public static ObjectHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
 
-	private static ObjectHelper createNew() throws Exception {
+	private static ObjectHelper createNew() throws IOException {
 		ObjectHelper helper = new ObjectHelper();
 
 		OBJECT_SERVER_URL = ResourceHelper.getSysEnvProperty(ResourceHelper.CONST_ENV_VAR_OBJECT_URL, true);
@@ -99,6 +103,8 @@ public class ObjectHelper extends AbstractHelper {
 		try {
 			RequestHelper.getInstance(getAuthorizationHeader()).executeGet(url);
 		} catch (HttpClientErrorException e) {
+			logger.debug("URL: " + url);
+			logger.error("Method: ObjectHelper.exists", e);
 			return false;
 		}
 		return true;

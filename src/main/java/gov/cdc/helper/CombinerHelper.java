@@ -1,6 +1,7 @@
 package gov.cdc.helper;
 
 import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,21 +22,21 @@ public class CombinerHelper extends AbstractHelper {
 	private static String DELETE_CONFIG_PATH;
 	private static String CREATE_OR_UPDATE_CONFIG_PATH;
 
-	public static CombinerHelper getInstance(String authorizationHeader) throws Exception {
+	public static CombinerHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (CombinerHelper) createNew().setAuthorizationHeader(authorizationHeader);
 		else
 			return getInstance();
 	}
 
-	public static CombinerHelper getInstance() throws Exception {
+	public static CombinerHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
 
-	private static CombinerHelper createNew() throws Exception {
+	private static CombinerHelper createNew() throws IOException {
 		CombinerHelper helper = new CombinerHelper();
 
 		COMBINER_SERVER_URL = ResourceHelper.getSysEnvProperty(ResourceHelper.CONST_ENV_VAR_COMBINER_URL, true);

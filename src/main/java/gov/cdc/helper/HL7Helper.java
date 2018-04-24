@@ -26,21 +26,21 @@ public class HL7Helper extends AbstractHelper {
 	private static String VALIDATE_WITH_RULES_PATH;
 	private static String HL7_SPEC;
 
-	public static HL7Helper getInstance(String authorizationHeader) throws Exception {
+	public static HL7Helper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (HL7Helper) createNew().setAuthorizationHeader(authorizationHeader);
 		else
 			return getInstance();
 	}
 
-	public static HL7Helper getInstance() throws Exception {
+	public static HL7Helper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
 
-	private static HL7Helper createNew() throws Exception {
+	private static HL7Helper createNew() throws IOException {
 		HL7Helper helper = new HL7Helper();
 
 		HL7_SERVER_URL = ResourceHelper.getSysEnvProperty(ResourceHelper.CONST_ENV_VAR_HL7_UTILS_URL, true);

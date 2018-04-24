@@ -2,6 +2,7 @@ package gov.cdc.helper;
 
 import java.util.Arrays;
 import java.util.List;
+import java.io.IOException;
 
 import org.json.JSONObject;
 import org.springframework.util.LinkedMultiValueMap;
@@ -15,14 +16,14 @@ public class OAuthHelper extends AbstractHelper {
 	private static String REQUEST_TOKEN;
 	private static String SCOPES;
 
-	public static OAuthHelper getInstance() throws Exception {
+	public static OAuthHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
 
-	private static OAuthHelper createNew() throws Exception {
+	private static OAuthHelper createNew() throws IOException {
 		OAuthHelper helper = new OAuthHelper();
 
 		OAUTH_SERVER_URL = ResourceHelper.getSysEnvProperty(ResourceHelper.CONST_ENV_VAR_OAUTH_URL, true);
@@ -34,16 +35,15 @@ public class OAuthHelper extends AbstractHelper {
 		return helper;
 	}
 
-	public String getToken() throws Exception {
+	public String getToken() throws IOException {
 		if (SCOPES != null && !SCOPES.isEmpty())
 			return getToken(Arrays.asList(SCOPES.split(" ")));
 		else
 			return getToken(null);
 	}
 
-	public String getToken(List<String> scopes) throws Exception {
-		String token = null;
-
+	public String getToken(List<String> scopes) throws IOException {
+		String token;
 		String url = OAUTH_SERVER_URL + REQUEST_TOKEN;
 
 		MultiValueMap<String, String> data = new LinkedMultiValueMap<String, String>();

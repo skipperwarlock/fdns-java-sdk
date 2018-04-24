@@ -1,5 +1,6 @@
 package gov.cdc.helper;
 
+import java.io.IOException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
@@ -20,21 +21,21 @@ public class IndexingHelper extends AbstractHelper {
 	private static String DELETE_SCROLL_INDEX_PATH;
 	private static String TYPE;
 
-	public static IndexingHelper getInstance(String authorizationHeader) throws Exception {
+	public static IndexingHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (IndexingHelper) createNew().setAuthorizationHeader(authorizationHeader);
 		else
 			return getInstance();
 	}
 
-	public static IndexingHelper getInstance() throws Exception {
+	public static IndexingHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
 
-	private static IndexingHelper createNew() throws Exception {
+	private static IndexingHelper createNew() throws IOException {
 		IndexingHelper helper = new IndexingHelper();
 
 		INDEXING_SERVER_URL = ResourceHelper.getSysEnvProperty(ResourceHelper.CONST_ENV_VAR_INDEXING_URL, true);
@@ -122,7 +123,7 @@ public class IndexingHelper extends AbstractHelper {
 		url = url.replace("{hydrate}", Boolean.toString(hydrate));
 		url = url.replace("{from}", Integer.toString(from));
 		url = url.replace("{size}", Integer.toString(size));
-		if (scroll != null & !scroll.isEmpty())
+		if (scroll != null && !scroll.isEmpty())
 			url = url.replace("{scroll}", scroll);
 		else
 			url = url.replace("&scroll={scroll}", "");

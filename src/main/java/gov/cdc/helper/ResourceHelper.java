@@ -83,14 +83,14 @@ public class ResourceHelper {
 		return getProperties().getProperty(propertyName);
 	}
 
-	public static String getSysEnvProperty(String propertyName, boolean required) throws Exception {
+	public static String getSysEnvProperty(String propertyName, boolean required) throws IOException {
 		String value = System.getProperty(propertyName);
 		if (value == null || value.isEmpty())
 			value = System.getenv().get(propertyName);
 			
 		logger.debug("Env Variable: " + propertyName + " = " + value);
 		if (required && StringUtils.isEmpty(value)) {
-			throw new Exception("The environment variable `" + propertyName + "` is empty.");
+			throw new IOException("The environment variable `" + propertyName + "` is empty.");
 		}
 		return value;
 	}

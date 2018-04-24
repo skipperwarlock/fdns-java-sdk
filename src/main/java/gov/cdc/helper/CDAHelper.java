@@ -1,6 +1,7 @@
 package gov.cdc.helper;
 
 import org.json.JSONObject;
+import java.io.IOException;
 import org.springframework.http.ResponseEntity;
 
 public class CDAHelper extends AbstractHelper {
@@ -10,21 +11,21 @@ public class CDAHelper extends AbstractHelper {
 	private static String CDA_SERVER_URL;
 	private static String PARSE_CDA;
 	
-	public static CDAHelper getInstance(String authorizationHeader) throws Exception {
+	public static CDAHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (CDAHelper) createNew().setAuthorizationHeader(authorizationHeader);
 		else
 			return getInstance();
 	}
 
-	public static CDAHelper getInstance() throws Exception {
+	public static CDAHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
 	
-	private static CDAHelper createNew() throws Exception {
+	private static CDAHelper createNew() throws IOException {
 		CDAHelper helper = new CDAHelper();
 
 		CDA_SERVER_URL = ResourceHelper.getSysEnvProperty(ResourceHelper.CONST_ENV_VAR_CDA_UTILS_URL, true);

@@ -1,6 +1,7 @@
 package gov.cdc.helper;
 
 import java.util.List;
+import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -13,14 +14,14 @@ public class ScopesHelper extends AbstractHelper {
 	private static String SCOPES_SERVER_URL;
 	private static String GET_SCOPES_PATH;
 
-	public static ScopesHelper getInstance() throws Exception {
+	public static ScopesHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
 
-	private static ScopesHelper createNew() throws Exception {
+	private static ScopesHelper createNew() throws IOException {
 		ScopesHelper helper = new ScopesHelper();
 
 		SCOPES_SERVER_URL = ResourceHelper.getSysEnvProperty(ResourceHelper.CONST_ENV_VAR_SCOPES_URL, true);

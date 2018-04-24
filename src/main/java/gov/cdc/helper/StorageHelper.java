@@ -1,5 +1,6 @@
 package gov.cdc.helper;
 
+import java.io.IOException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpMethod;
@@ -25,21 +26,21 @@ public class StorageHelper extends AbstractHelper {
 	private static String COPY_NODE_PATH;
 	private static String DRAWER_NAME;
 
-	public static StorageHelper getInstance(String authorizationHeader) throws Exception {
+	public static StorageHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (StorageHelper) createNew().setAuthorizationHeader(authorizationHeader);
 		else
 			return getInstance();
 	}
 
-	public static StorageHelper getInstance() throws Exception {
+	public static StorageHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
 
-	private static StorageHelper createNew() throws Exception {
+	private static StorageHelper createNew() throws IOException {
 		StorageHelper helper = new StorageHelper();
 
 		STORAGE_SERVER_URL = ResourceHelper.getSysEnvProperty(ResourceHelper.CONST_ENV_VAR_STORAGE_URL, true);

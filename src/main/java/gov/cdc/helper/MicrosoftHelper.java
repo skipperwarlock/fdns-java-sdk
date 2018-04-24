@@ -1,5 +1,6 @@
 package gov.cdc.helper;
 
+import java.io.IOException;
 import org.json.JSONObject;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -15,21 +16,21 @@ public class MicrosoftHelper extends AbstractHelper {
 	private static String XLSX_CONVERT_CSV_PATH;
 	private static String DOCX_EXTRACT_PATH;
 
-	public static MicrosoftHelper getInstance(String authorizationHeader) throws Exception {
+	public static MicrosoftHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (MicrosoftHelper) createNew().setAuthorizationHeader(authorizationHeader);
 		else
 			return getInstance();
 	}
 
-	public static MicrosoftHelper getInstance() throws Exception {
+	public static MicrosoftHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
 
-	private static MicrosoftHelper createNew() throws Exception {
+	private static MicrosoftHelper createNew() throws IOException {
 		MicrosoftHelper helper = new MicrosoftHelper();
 
 		MICROSOFT_UTILS_SERVER_URL = ResourceHelper.getSysEnvProperty(ResourceHelper.CONST_ENV_VAR_MICROSOFT_UTILS_URL, true);

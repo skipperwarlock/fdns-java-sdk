@@ -10,7 +10,11 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.log4j.Logger;
+
 public class SSLCertificateValidation {
+	
+	private static final Logger logger = Logger.getLogger(SSLCertificateValidation.class);
 	
 	public static void disable() {
         try {
@@ -20,7 +24,7 @@ public class SSLCertificateValidation {
             HttpsURLConnection.setDefaultSSLSocketFactory(sslc.getSocketFactory());
             HttpsURLConnection.setDefaultHostnameVerifier(new NullHostnameVerifier());
         } catch(Exception e) {
-            e.printStackTrace();
+        	logger.error("Method: SSLCertificateValidation.disable", e);
         }
     }
 

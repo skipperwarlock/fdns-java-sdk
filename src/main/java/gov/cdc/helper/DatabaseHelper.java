@@ -4,26 +4,39 @@ import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 public class DatabaseHelper {
+	
+	private static String dbUrl;
+	private static String dbTable;
+	private static String dbUsername;
+	private static String dbPassword;
 
-	public static String dbUrl = null;
-	public static String dbTable = null;
-	public static String dbUsername = null;
-	public static String dbPassword = null;
+	public DatabaseHelper(String dbUrlOpt, String dbTableOpt, String dbUsernameOpt, String dbPasswordOpt) {
+		dbUrl = dbUrlOpt;
+		dbTable = dbTableOpt;
+		dbUsername = dbUsernameOpt;
+		dbPassword = dbPasswordOpt;
+	}
 
 	private static final Logger logger = Logger.getLogger(DatabaseHelper.class);
 
-	public static void insert(Map<String, String> data, byte[] fileData) {
+	public void insert(Map<String, String> data, byte[] fileData) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
 		try {
-			Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+			conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 
 			StringBuilder fields = new StringBuilder();
 			StringBuilder values = new StringBuilder();
-			for (String field : data.keySet()) {
+			for (Map.Entry<String,String> entry : data.entrySet()) {
+				String field = entry.getKey();
+				String value = entry.getValue();
 				if (!field.startsWith("_")) {
 					if (fields.length() > 0)
 						fields.append(",");
@@ -31,7 +44,7 @@ public class DatabaseHelper {
 					if (values.length() > 0)
 						values.append(",");
 					values.append("'");
-					values.append(data.get(field));
+					values.append(value);
 					values.append("'");
 				}
 			}
@@ -47,13 +60,16 @@ public class DatabaseHelper {
 			Clob fileBlob = conn.createClob();
 			fileBlob.setString(1, new String(fileData));
 
-			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setClob(1, fileBlob);
 			pstmt.executeUpdate();
-
-			conn.close();
 		} catch (Exception e) {
 			logger.error(e);
+		} finally {
+			if (conn != null)
+				conn.close();
+			if (pstmt != null)
+				pstmt.close();
 		}
 	}
 

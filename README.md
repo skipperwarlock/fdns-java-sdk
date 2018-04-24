@@ -1,17 +1,26 @@
-# fdns-java-sdk
-This is the repository with the Java SDK for Foundation Services (FDNS), also available on the [Maven Central Repository](https://maven.apache.org/repository/index.html).
+# FDNS Java SDK
+This is the repository with the Java SDK for Foundation Services (FDNS).
 
 ## Usage
 This library is designed to be used with FDNS as helpers to connect to other services.
 
-Add this line into your `pom.xml` to start using the Swagger UI.
+Add this into your `pom.xml` to start using the Java SDK:
 
 ```
+<!-- add the dependency to your project -->
 <dependency>
   <groupId>gov.cdc</groupId>
   <artifactId>fdns-java-sdk</artifactId>
   <version>1.0.0</version>
 </dependency>
+
+<!-- add GitHub CDCgov to repositories -->
+<repositories>
+  <repository>
+    <id>github-cdcgov</id>
+    <url>https://github.com/CDCgov/maven-repository/raw/master/</url>
+  </repository>
+</repositories>
 ```
 
 ### Helpers

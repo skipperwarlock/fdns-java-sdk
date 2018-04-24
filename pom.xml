@@ -11,14 +11,14 @@
 	<url>https://github.com/CDCgov/fdns-java-sdk</url>
 
 	<licenses>
-    <license>
-      <name>Apache License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-  <issueManagement>
+	<issueManagement>
 		<url>https://github.com/CDCgov/fdns-java-sdk/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>

@@ -107,8 +107,8 @@
 
 	<build>
 		<plugins>
-			<!-- OWASP dependency check, looks for known vulnerabilities in our dependent packages -->
-			<plugin>
+            <!-- OWASP dependency check, looks for known vulnerabilities in our dependent packages -->
+            <plugin>
               <groupId>org.owasp</groupId>
               <artifactId>dependency-check-maven</artifactId>
               <version>3.3.2</version>

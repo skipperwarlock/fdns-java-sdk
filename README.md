@@ -53,16 +53,16 @@ copyright interest.
 The repository utilizes code licensed under the terms of the Apache Software
 License and therefore is licensed under ASL v2 or later.
 
-This source code in this repository is free: you can redistribute it and/or modify it under
+The source code in this repository is free: you can redistribute it and/or modify it under
 the terms of the Apache Software License version 2, or (at your option) any
 later version.
 
-This source code in this repository is distributed in the hope that it will be useful, but WITHOUT ANY
+The source code in this repository is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE. See the Apache Software License for more details.
 
 You should have received a copy of the Apache Software License along with this
-program. If not, see http://www.apache.org/licenses/LICENSE-2.0.html
+program. If not, see https://www.apache.org/licenses/LICENSE-2.0.html
 
 The source code forked from other open source projects will inherit its license.
 
@@ -84,13 +84,13 @@ non-exclusive, transferable license to all users under the terms of the
 later.
 
 All comments, messages, pull requests, and other submissions received through
-CDC including this GitHub page are subject to the [Presidential Records Act](http://www.archives.gov/about/laws/presidential-records.html)
-and may be archived. Learn more at [http://www.cdc.gov/other/privacy.html](http://www.cdc.gov/other/privacy.html).
+CDC including this GitHub page are subject to the [Presidential Records Act](https://www.archives.gov/about/laws/presidential-records.html)
+and may be archived. Learn more at [http://www.cdc.gov/other/privacy.html](https://www.cdc.gov/other/privacy.html).
 
 ## Records
 This repository is not a source of government records, but is a copy to increase
 collaboration and collaborative potential. All government records will be
-published through the [CDC web site](http://www.cdc.gov).
+published through the [CDC web site](https://www.cdc.gov).
 
 ## Notices
 Please refer to [CDC's Template Repository](https://github.com/CDCgov/template)

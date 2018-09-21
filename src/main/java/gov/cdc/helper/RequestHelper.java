@@ -231,7 +231,7 @@ public class RequestHelper extends AbstractHelper {
 					if (messageConverter.canRead(responseType, null)) {
 						List<MediaType> supportedMediaTypes = messageConverter.getSupportedMediaTypes();
 						for (MediaType supportedMediaType : supportedMediaTypes) {
-							if (supportedMediaType.getCharSet() != null) {
+							if (supportedMediaType.getCharset() != null) {
 								supportedMediaType =
 										new MediaType(supportedMediaType.getType(), supportedMediaType.getSubtype());
 							}

@@ -11,7 +11,7 @@ Add this into your `pom.xml` to start using the Java SDK:
 <dependency>
   <groupId>gov.cdc</groupId>
   <artifactId>fdns-java-sdk</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 
 <!-- add GitHub CDCgov to repositories -->

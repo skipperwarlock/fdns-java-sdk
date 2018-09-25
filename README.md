@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/CDCgov/fdns-java-sdk.svg?branch=master)](https://travis-ci.org/CDCgov/fdns-java-sdk)
+
 # FDNS Java SDK
 This is the repository with the Java SDK for Foundation Services (FDNS).
 

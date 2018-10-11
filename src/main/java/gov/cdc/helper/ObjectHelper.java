@@ -28,6 +28,7 @@ public class ObjectHelper extends AbstractHelper {
 	private static String AGGREGATE_PATH;
 	private static String DISTINCT_PATH;
 	private static String FIND_PATH;
+	private static String SEARCH_PATH;
 	private static String DELETE_OBJECT_PATH;
 	private static String DELETE_COLLECTION_PATH;
 	private static String DB;
@@ -61,6 +62,7 @@ public class ObjectHelper extends AbstractHelper {
 		AGGREGATE_PATH = ResourceHelper.getProperty("object.aggregate");
 		DISTINCT_PATH = ResourceHelper.getProperty("object.distinct");
 		FIND_PATH = ResourceHelper.getProperty("object.find");
+		SEARCH_PATH = ResourceHelper.getProperty("object.search");
 		DELETE_OBJECT_PATH = ResourceHelper.getProperty("object.deleteObject");
 		DELETE_COLLECTION_PATH = ResourceHelper.getProperty("object.deleteCollection");
 		DB = ResourceHelper.getProperty("object.db");
@@ -215,6 +217,34 @@ public class ObjectHelper extends AbstractHelper {
 			url = url.replace("size={size}", "");
 
 		ResponseEntity<String> response = RequestHelper.getInstance(getAuthorizationHeader()).executePost(url, json.toString(), MediaType.APPLICATION_JSON);
+		return new JSONObject(response.getBody());
+	}
+
+	public JSONObject search(String qs) {
+		return search(qs, DB, COLLECTION);
+	}
+
+	public JSONObject search(String qs, String db, String collection) {
+		return search(qs, db, collection, -1, -1);
+	}
+
+	public JSONObject search(String qs, String db, String collection, int from, int size) {
+		String url = OBJECT_SERVER_URL + SEARCH_PATH;
+		url = url.replace("{qs}", qs);
+		url = url.replace("{db}", db);
+		url = url.replace("{collection}", collection);
+
+		if (from != -1)
+			url = url.replace("{from}", Integer.toString(from));
+		else
+			url = url.replace("from={from}", "");
+
+		if (size != -1)
+			url = url.replace("{size}", Integer.toString(size));
+		else
+			url = url.replace("size={size}", "");
+
+		ResponseEntity<String> response = RequestHelper.getInstance(getAuthorizationHeader()).executePost(url);
 		return new JSONObject(response.getBody());
 	}
 

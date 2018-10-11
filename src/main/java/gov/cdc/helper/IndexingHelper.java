@@ -20,6 +20,8 @@ public class IndexingHelper extends AbstractHelper {
 	private static String SCROLL_PATH;
 	private static String DELETE_SCROLL_INDEX_PATH;
 	private static String TYPE;
+	private static String DELETE_CONFIG_PATH;
+	private static String CREATE_OR_UPDATE_CONFIG_PATH;
 
 	public static IndexingHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
@@ -50,6 +52,8 @@ public class IndexingHelper extends AbstractHelper {
 		SCROLL_PATH = ResourceHelper.getProperty("indexing.scroll");
 		DELETE_SCROLL_INDEX_PATH = ResourceHelper.getProperty("indexing.deleteScrollIndex");
 		TYPE = ResourceHelper.getProperty("indexing.type");
+		DELETE_CONFIG_PATH = ResourceHelper.getProperty("indexing.deleteConfig");
+		CREATE_OR_UPDATE_CONFIG_PATH = ResourceHelper.getProperty("indexing.createOrUpdateConfig");
 
 		return helper;
 	}
@@ -151,4 +155,19 @@ public class IndexingHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	public JSONObject createOrUpdateConfig(String configName, JSONObject config) {
+		String url = INDEXING_SERVER_URL + CREATE_OR_UPDATE_CONFIG_PATH;
+		url = url.replace("{configName}", configName);
+
+		ResponseEntity<String> response = RequestHelper.getInstance(getAuthorizationHeader()).executePost(url, config.toString(), MediaType.APPLICATION_JSON);
+		return new JSONObject(response.getBody());
+	}
+
+	public JSONObject deleteConfig(String configName) {
+		String url = INDEXING_SERVER_URL + DELETE_CONFIG_PATH;
+		url = url.replace("{configName}", configName);
+
+		ResponseEntity<String> response = RequestHelper.getInstance(getAuthorizationHeader()).executeDelete(url);
+		return new JSONObject(response.getBody());
+	}
 }

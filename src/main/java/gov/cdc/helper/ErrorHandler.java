@@ -2,19 +2,15 @@ package gov.cdc.helper;
 
 import java.util.Map;
 
-import gov.cdc.foundation.helper.MessageHelper;
 import org.apache.log4j.Logger;
 import org.bson.BsonSerializationException;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import gov.cdc.helper.common.ServiceException;
-import sun.plugin2.message.Message;
 
 @Configuration
 public class ErrorHandler {
@@ -24,7 +20,7 @@ public class ErrorHandler {
 	private static ErrorHandler me = null;
 
 	public ResponseEntity<?> handle(HttpStatus status, Map<String,Object> log){
-			log.put(MessageHelper.CONST_SUCCESS, false);
+			log.put(AbstractMessageHelper.CONST_SUCCESS, false);
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode error = null;
 			try{
@@ -51,8 +47,8 @@ public class ErrorHandler {
 			log.put("cause", se.getObj());
 		}
 		
-		log.put(MessageHelper.CONST_SUCCESS, false);
-		log.put(MessageHelper.CONST_MESSAGE, e.getMessage());
+		log.put(AbstractMessageHelper.CONST_SUCCESS, false);
+		log.put(AbstractMessageHelper.CONST_MESSAGE, e.getMessage());
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode error = null;

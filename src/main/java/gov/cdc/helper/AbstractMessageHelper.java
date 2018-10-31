@@ -18,6 +18,7 @@ public class AbstractMessageHelper {
 	public static final String CONST_CAUSE = "cause";
 	public static final String CONST_REASON = "reason";
 	public static final String CONST_TRACE = "trace";
+	public static final String CONST_MESSAGE = "message";
 
 	public static void append(Map<String, Object> log, Exception e) {
 		log.put(AbstractMessageHelper.CONST_SUCCESS, false);

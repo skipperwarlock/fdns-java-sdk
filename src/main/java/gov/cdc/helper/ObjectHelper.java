@@ -244,7 +244,7 @@ public class ObjectHelper extends AbstractHelper {
 		else
 			url = url.replace("size={size}", "");
 
-		ResponseEntity<String> response = RequestHelper.getInstance(getAuthorizationHeader()).executePost(url);
+		ResponseEntity<String> response = RequestHelper.getInstance(getAuthorizationHeader()).executeGet(url);
 		return new JSONObject(response.getBody());
 	}
 

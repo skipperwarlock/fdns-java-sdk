@@ -3,14 +3,13 @@ package gov.cdc.helper;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.bson.BsonSerializationException;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import gov.cdc.helper.common.ServiceException;
 
 @Configuration
@@ -19,6 +18,18 @@ public class ErrorHandler {
 	private static final Logger logger = Logger.getLogger(ErrorHandler.class);
 
 	private static ErrorHandler me = null;
+
+	public ResponseEntity<?> handle(HttpStatus status, Map<String,Object> log){
+			log.put(AbstractMessageHelper.CONST_SUCCESS, false);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode error = null;
+			try{
+				error = mapper.readTree(new JSONObject(log).toString());
+			} catch(Exception e){
+				logger.error(e);
+			}
+		return ResponseEntity.status(status).body(error);
+	}
 
 	public ResponseEntity<?> handle(Exception e, Map<String, Object> log) {
 		boolean trace = false;
@@ -36,8 +47,8 @@ public class ErrorHandler {
 			log.put("cause", se.getObj());
 		}
 		
-		log.put("success", false);
-		log.put("message", e.getMessage());
+		log.put(AbstractMessageHelper.CONST_SUCCESS, false);
+		log.put(AbstractMessageHelper.CONST_MESSAGE, e.getMessage());
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode error = null;
@@ -47,7 +58,11 @@ public class ErrorHandler {
 			// Do nothing
 			logger.error(e2);
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		if(e.getCause() instanceof BsonSerializationException){
+			return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(error);
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		}
 	}
 
 	public static ErrorHandler getInstance() {

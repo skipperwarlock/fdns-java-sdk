@@ -86,10 +86,10 @@ public class ObjectHelper extends AbstractHelper {
 		/* Removed so user will receive error from mongo
 		// Some micro services are storing a json object with $ and . in keys,
 		// but it's not supported
-		String body = response.getBody();
 		body = body.replaceAll("__DOLLAR__", "\\$");
 		body = body.replaceAll("__DOT__", "\\.");
 		*/
+		String body = response.getBody();
 
 		return new JSONObject(body);
 	}
@@ -148,10 +148,10 @@ public class ObjectHelper extends AbstractHelper {
 		/*Removed so user will receive error from mongo
 		// Some micro services are storing a json object with $ and . in keys,
 		// but it's not supported
-		String payloadAsString = json.toString();
 		payloadAsString = payloadAsString.replaceAll("\\$", "__DOLLAR__");
 		payloadAsString = payloadAsString.replaceAll("\\.", "__DOT__");
 		*/
+		String payloadAsString = json.toString();
 
 		ResponseEntity<String> response = RequestHelper.getInstance(getAuthorizationHeader()).executePost(url, payloadAsString, MediaType.APPLICATION_JSON);
 		return new JSONObject(response.getBody());
@@ -279,11 +279,11 @@ public class ObjectHelper extends AbstractHelper {
 		/*Removed so user will receive error from mongo
 		// Some micro services are storing a json object with $ and . in keys,
 		// but it's not supported
-		String payloadAsString = json.toString();
 		payloadAsString = payloadAsString.replaceAll("\\$", "__DOLLAR__");
 		payloadAsString = payloadAsString.replaceAll("\\.", "__DOT__");
 		*/
-		
+		String payloadAsString = json.toString();
+
 		// But reapply the _id if it has been changed
 		if (json.has("_id")) {
 			JSONObject fixedJson = new JSONObject(payloadAsString);

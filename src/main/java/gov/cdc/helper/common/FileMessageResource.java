@@ -24,11 +24,19 @@ public class FileMessageResource extends ByteArrayResource {
 		this.filename = filename;
 	}
 
+	/**
+	 * Returns filename associated with the {@Link MimeMessage} in the form data
+	 * @return filename associated with the {@Link MimeMessage} in the form data
+	 */
 	@Override
 	public String getFilename() {
 		return filename;
 	}
 
+	/**
+	 * @param obj
+	 * @return true if obj is FileMessageResource with equal filename (ignoring case) or true if obj is ByteArrayResource with equal byteArray
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof FileMessageResource) {
@@ -38,6 +46,9 @@ public class FileMessageResource extends ByteArrayResource {
 			return super.equals(obj);
 	}
 
+	/**
+	 * @return a hash code value for this object
+	 */
 	@Override
 	public int hashCode() {
 		return super.hashCode() + getFilename().hashCode();

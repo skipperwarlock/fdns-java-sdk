@@ -14,11 +14,21 @@ public class StringResponseExtractor implements ResponseExtractor<String> {
 	private static final Logger logger = Logger.getLogger(StringResponseExtractor.class);
 	
 	private StreamProcessor processor;
-	
+
+	/**
+	 * Constructs a new instance of the StringResponseExtractor class
+	 * @param processor
+	 */
 	public StringResponseExtractor(StreamProcessor processor) {
 		this.processor = processor;
 	}
 
+	/**
+	 * Reads response body into processor and returns null
+	 * @param response client response to http request
+	 * @return null
+	 * @throws IOException
+	 */
 	public String extractData(ClientHttpResponse response) throws IOException {
 		InputStream is = response.getBody();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));

@@ -509,10 +509,29 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Call object Service to update object
+	 * Database and Collection values defined in config-services.properties.
+	 *
+	 * @see ObjectHelper#updateObject(String, JSONObject, String, String)
+	 *
+	 * @param objectId object id
+	 * @param command new object data
+	 * @return response from object service
+	 */
 	public JSONObject updateObject(String objectId, JSONObject command) {
 		return updateObject(objectId, command, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to update object
+	 *
+	 * @param objectId object id
+	 * @param json new object data
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from object service
+	 */
 	public JSONObject updateObject(String objectId, JSONObject json, String db, String collection) {
 		String url = OBJECT_SERVER_URL + UPDATE_OBJECT_PATH;
 		url = url.replace("{db}", db);
@@ -538,10 +557,24 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Call Object Service to delete collection
+	 * Database and Collection values defined in config-services.properties.
+	 *
+	 * @see ObjectHelper#deleteCollection(String, String)
+	 * @return response from object service with success boolean
+	 */
 	public JSONObject deleteCollection() {
 		return deleteCollection(DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to delete collection
+	 *
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from object service with success boolean
+	 */
 	public JSONObject deleteCollection(String db, String collection) {
 		String url = OBJECT_SERVER_URL + DELETE_COLLECTION_PATH;
 		url = url.replace("{db}", db);
@@ -551,6 +584,13 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Merge JSONObjects
+	 *
+	 * @param o1 base object
+	 * @param o2 object to merge into o1
+	 * @return object with values from o2 merged into o1
+	 */
 	public JSONObject merge(JSONObject o1, JSONObject o2) {
 		JSONObject o = new JSONObject(o1.toString());
 

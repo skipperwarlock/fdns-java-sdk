@@ -23,6 +23,15 @@ public class IndexingHelper extends AbstractHelper {
 	private static String DELETE_CONFIG_PATH;
 	private static String CREATE_OR_UPDATE_CONFIG_PATH;
 
+	/**
+	 * If authorizationHeader isn't null and if provided header starts with 'Bearer',
+	 * constructs new instance of IndexingHelper class and sets the authorization header to the provided value.
+	 * If authorizationHeader is null or doesn't start with 'Bearer', returns singleton instance of IndexingHelper.
+	 *
+	 * @param authorizationHeader
+	 * @return
+	 * @throws IOException
+	 */
 	public static IndexingHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (IndexingHelper) createNew().setAuthorizationHeader(authorizationHeader);
@@ -30,6 +39,12 @@ public class IndexingHelper extends AbstractHelper {
 			return getInstance();
 	}
 
+	/**
+	 * IndexingHelper singleton constructor
+	 *
+	 * @return
+	 * @throws IOException
+	 */
 	public static IndexingHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();

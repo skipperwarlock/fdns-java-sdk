@@ -19,6 +19,13 @@ public class ErrorHandler {
 
 	private static ErrorHandler me = null;
 
+	/**
+	 *  Generate http error response for provided status and log data
+	 *
+	 * @param status http status code
+	 * @param log log data to provide in response
+	 * @return http response with provided code and log data
+	 */
 	public ResponseEntity<?> handle(HttpStatus status, Map<String,Object> log){
 			log.put(AbstractMessageHelper.CONST_SUCCESS, false);
 			ObjectMapper mapper = new ObjectMapper();
@@ -31,6 +38,13 @@ public class ErrorHandler {
 		return ResponseEntity.status(status).body(error);
 	}
 
+	/**
+	 * Generate http 404 (Bad Request) or 413 (Payload Too Large) response for provided exception and log data
+	 *
+	 * @param e exception to be returned with response
+	 * @param log log data to include in response
+	 * @return http response with provided exception details and log data
+	 */
 	public ResponseEntity<?> handle(Exception e, Map<String, Object> log) {
 		boolean trace = false;
 		try {
@@ -65,6 +79,11 @@ public class ErrorHandler {
 		}
 	}
 
+	/**
+	 * ErrorHandler singleton constructor
+	 *
+	 * @return
+	 */
 	public static ErrorHandler getInstance() {
 		if (me == null)
 			me = new ErrorHandler();

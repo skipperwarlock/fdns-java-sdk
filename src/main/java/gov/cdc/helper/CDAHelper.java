@@ -10,7 +10,16 @@ public class CDAHelper extends AbstractHelper {
 
 	private static String CDA_SERVER_URL;
 	private static String PARSE_CDA;
-	
+
+	/**
+	 * If authorizationHeader isn't null and if provided header starts with 'Bearer',
+	 * constructs new instance of CDAHelper class and sets the authorization header to the provided value.
+	 * If authorizationHeader is null or doesn't start with 'Bearer', returns singleton instance of CDAHelper.
+	 *
+	 * @param authorizationHeader
+	 * @return
+	 * @throws IOException
+	 */
 	public static CDAHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (CDAHelper) createNew().setAuthorizationHeader(authorizationHeader);
@@ -18,13 +27,18 @@ public class CDAHelper extends AbstractHelper {
 			return getInstance();
 	}
 
+	/**
+	 * CDAHelper singleton constructor
+	 * @return
+	 * @throws IOException
+	 */
 	public static CDAHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
 		}
 		return instance;
 	}
-	
+
 	private static CDAHelper createNew() throws IOException {
 		CDAHelper helper = new CDAHelper();
 
@@ -35,7 +49,13 @@ public class CDAHelper extends AbstractHelper {
 		
 		return helper;
 	}
-	
+
+	/**
+	 * Send provided CDA message to CDA Utils and return parsed message as JSONObject
+	 *
+	 * @param cda_message message to be parsed
+	 * @return parsed cda message
+	 */
 	public JSONObject parse(String cda_message) {
 		String url = CDA_SERVER_URL + PARSE_CDA;
 

@@ -26,6 +26,15 @@ public class HL7Helper extends AbstractHelper {
 	private static String VALIDATE_WITH_RULES_PATH;
 	private static String HL7_SPEC;
 
+	/**
+	 * If authorizationHeader isn't null and if provided header starts with 'Bearer',
+	 * constructs new instance of HL7Helper class and sets the authorization header to the provided value.
+	 * If authorizationHeader is null or doesn't start with 'Bearer', returns singleton instance of HL7Helper.
+	 *
+	 * @param authorizationHeader
+	 * @return
+	 * @throws IOException
+	 */
 	public static HL7Helper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (HL7Helper) createNew().setAuthorizationHeader(authorizationHeader);
@@ -33,6 +42,12 @@ public class HL7Helper extends AbstractHelper {
 			return getInstance();
 	}
 
+	/**
+	 * HL7Helper singleton constructor
+	 *
+	 * @return
+	 * @throws IOException
+	 */
 	public static HL7Helper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
@@ -58,6 +73,15 @@ public class HL7Helper extends AbstractHelper {
 		return helper;
 	}
 
+	/**
+	 * Execute post call to HL7 Utils to transform an HL7 message to XML document.
+	 *
+	 * @param hl7_message  HL7 message to transform
+	 * @return XML transformation of hl7_message
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
 	public Document parseToXML(String hl7_message) throws ParserConfigurationException, SAXException, IOException {
 		String url = HL7_SERVER_URL + PARSE_HL7_TO_XML_PATH;
 
@@ -68,10 +92,24 @@ public class HL7Helper extends AbstractHelper {
 		return dBuilder.parse(new ByteArrayInputStream(response.getBody().getBytes()));
 	}
 
+	/**
+	 * Calls HL7 Utils to transform HL7 to JSON with spec defined in config-services.properties
+	 * @see HL7Helper#parse(String, String)
+	 *
+	 * @param hl7_message message to parse
+	 * @return
+	 */
 	public JSONObject parse(String hl7_message) {
 		return parse(hl7_message, HL7_SPEC);
 	}
 
+	/**
+	 * Execute post call to HL7 Utils to transform HL7 to JSON.
+	 *
+	 * @param hl7_message hl7 message to transform to json
+	 * @param spec  hl7 or phinms
+	 * @return json transformation of hl7 message
+	 */
 	public JSONObject parse(String hl7_message, String spec) {
 		String url = HL7_SERVER_URL + PARSE_HL7_PATH;
 		url = url.replace("{spec}", spec);
@@ -80,6 +118,14 @@ public class HL7Helper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Execute post call to HL7 Utils to transform HL7 to JSON.
+	 *
+	 * @param hl7_message hl7 message to transform to json
+	 * @param spec hl7 or phinms
+	 * @param profile 	message profile
+	 * @return json transformation of hl7 message
+	 */
 	public JSONObject parse(String hl7_message, String spec, String profile) {
 		String url = HL7_SERVER_URL + PARSE_HL7_PROFILE_PATH;
 		url = url.replace("{spec}", spec);
@@ -89,10 +135,24 @@ public class HL7Helper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Calls HL7 Utils to get case identifiers for HL7 message with spec defined in config-services.properties
+	 * @see HL7Helper#getCaseId(String, String)
+	 *
+	 * @param hl7_message message from which to read case identifiers
+	 * @return case identifier segments
+	 */
 	public JSONObject getCaseId(String hl7_message) {
 		return getCaseId(hl7_message, HL7_SPEC);
 	}
 
+	/**
+	 * Execute post call to HL7 Utils to get case identifiers from hl7 message
+	 *
+	 * @param hl7_message message containing Case Ids
+	 * @param spec hl7 or phinms
+	 * @return case identifier segments
+	 */
 	public JSONObject getCaseId(String hl7_message, String spec) {
 		String url = HL7_SERVER_URL + GET_CASE_ID_PATH;
 		url = url.replace("{spec}", spec);
@@ -101,6 +161,12 @@ public class HL7Helper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Execute post call to HL7 Utils to get hash for hl7 message
+	 *
+	 * @param hl7_message message for which to get hash
+	 * @return hash value for message
+	 */
 	public JSONObject getMessageHash(String hl7_message) {
 		String url = HL7_SERVER_URL + GET_MESSAGE_HASH_PATH;
 

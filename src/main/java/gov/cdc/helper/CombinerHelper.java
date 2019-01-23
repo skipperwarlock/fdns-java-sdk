@@ -22,6 +22,15 @@ public class CombinerHelper extends AbstractHelper {
 	private static String DELETE_CONFIG_PATH;
 	private static String CREATE_OR_UPDATE_CONFIG_PATH;
 
+	/**
+	 * If authorizationHeader isn't null and if provided header starts with 'Bearer',
+	 * constructs new instance of CombinerHelper class and sets the authorization header to the provided value.
+	 * If authorizationHeader is null or doesn't start with 'Bearer', returns singleton instance of combinerHelper.
+	 *
+	 * @param authorizationHeader
+	 * @return
+	 * @throws IOException
+	 */
 	public static CombinerHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (CombinerHelper) createNew().setAuthorizationHeader(authorizationHeader);
@@ -29,6 +38,11 @@ public class CombinerHelper extends AbstractHelper {
 			return getInstance();
 	}
 
+	/**
+	 * CombinerHelper singleton constructor
+	 * @return
+	 * @throws IOException
+	 */
 	public static CombinerHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
@@ -50,6 +64,13 @@ public class CombinerHelper extends AbstractHelper {
 		return helper;
 	}
 
+	/**
+	 * Execute post call to combiner to flatten provided json object to json, csv, or xlsx
+	 *
+	 * @param targetType target file type (json, csv, or xlsx)
+	 * @param json json object to flatten
+	 * @return flattened transformation of provided JSONObject in format specified in targetType
+	 */
 	public byte[] flatten(String targetType, JSONObject json) {
 		String url = COMBINER_SERVER_URL + FLATTEN_PATH;
 		url = url.replace("{targetType}", targetType);
@@ -69,6 +90,17 @@ public class CombinerHelper extends AbstractHelper {
 		return response.getBody().getBytes();
 	}
 
+	/**
+	 *
+	 * Execute post call to combiner to transform provided json objects into specified targetType
+	 *
+	 * @param targetType target file type (csv or xlsx)
+	 * @param configName name of config combiner should reference for transformation
+	 * @param jsons list of objects containing data to be transformed
+	 * @param orientation
+	 * @param includeHeader
+	 * @return transformed file(s) in format specified in targetType
+	 */
 	public byte[] combine(String targetType, String configName, List<JSONObject> jsons, String orientation, boolean includeHeader) {
 		String url = COMBINER_SERVER_URL + COMBINE_PATH;
 		url = url.replace("{targetType}", targetType);
@@ -98,6 +130,12 @@ public class CombinerHelper extends AbstractHelper {
 		return response.getBody().getBytes();
 	}
 
+	/**
+	 * Execute post call to combiner to create or update configuration
+	 * @param configName name of config to create or update
+	 * @param config new config data
+	 * @return response from combiner
+	 */
 	public JSONObject createOrUpdateConfig(String configName, JSONObject config) {
 		String url = COMBINER_SERVER_URL + CREATE_OR_UPDATE_CONFIG_PATH;
 		url = url.replace("{configName}", configName);
@@ -106,6 +144,11 @@ public class CombinerHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Execute post call to combiner to delete configuration
+	 * @param configName name of config to delete
+	 * @return response from combiner
+	 */
 	public JSONObject deleteConfig(String configName) {
 		String url = COMBINER_SERVER_URL + DELETE_CONFIG_PATH;
 		url = url.replace("{configName}", configName);

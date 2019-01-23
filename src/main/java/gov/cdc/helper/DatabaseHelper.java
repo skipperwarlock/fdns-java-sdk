@@ -16,6 +16,14 @@ public class DatabaseHelper {
 	private static String dbUsername;
 	private static String dbPassword;
 
+	/**
+	 * DatabaseHelper constructor
+	 *
+	 * @param dbUrlOpt database url
+	 * @param dbTableOpt table name
+	 * @param dbUsernameOpt username
+	 * @param dbPasswordOpt password
+	 */
 	public DatabaseHelper(String dbUrlOpt, String dbTableOpt, String dbUsernameOpt, String dbPasswordOpt) {
 		dbUrl = dbUrlOpt;
 		dbTable = dbTableOpt;
@@ -25,6 +33,13 @@ public class DatabaseHelper {
 
 	private static final Logger logger = Logger.getLogger(DatabaseHelper.class);
 
+	/**
+	 * Insert row into database
+	 *
+	 * @param data field and value pairs
+	 * @param fileData file data to be written as blob
+	 * @throws SQLException
+	 */
 	public void insert(Map<String, String> data, byte[] fileData) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

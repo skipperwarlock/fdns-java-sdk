@@ -44,6 +44,12 @@ public class ResourceHelper {
 		throw new IllegalAccessError("Helper class");
 	}
 
+	/**
+	 * Returns default properties file
+	 *
+	 * @return default properties file
+	 * @throws IOException
+	 */
 	public static Properties getProperties() throws IOException {
 		if (properties == null) {
 			properties = new Properties();
@@ -60,12 +66,25 @@ public class ResourceHelper {
 		return properties;
 	}
 
+	/**
+	 * Returns properties from specified path
+	 *
+	 * @param path path to properties file
+	 * @return properties from path
+	 * @throws IOException
+	 */
 	public static Properties getProperties(String path) throws IOException {
 		Properties properties = new Properties();
 		properties.load(ResourceHelper.class.getResourceAsStream(path));
 		return properties;
 	}
 
+	/**
+	 * Return properties from specified path as a map
+	 *
+	 * @param path path to properties file
+	 * @return transformed properties
+	 */
 	public static Map<String, String> getPropertyMap(String path) {
 		Map<String, String> map = new HashMap<String, String>();
 		try {
@@ -79,10 +98,25 @@ public class ResourceHelper {
 		return map;
 	}
 
+	/**
+	 * Returns property value
+	 *
+	 * @param propertyName name of property
+	 * @return value of property
+	 * @throws IOException
+	 */
 	public static String getProperty(String propertyName) throws IOException {
 		return getProperties().getProperty(propertyName);
 	}
 
+	/**
+	 * Returns system environment property
+	 *
+	 * @param propertyName name of property
+	 * @param required whether or not an exception should be thrown if property value is empty
+	 * @return
+	 * @throws IOException
+	 */
 	public static String getSysEnvProperty(String propertyName, boolean required) throws IOException {
 		String value = System.getProperty(propertyName);
 		if (value == null || value.isEmpty())

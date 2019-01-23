@@ -15,7 +15,10 @@ import org.apache.log4j.Logger;
 public class SSLCertificateValidation {
 	
 	private static final Logger logger = Logger.getLogger(SSLCertificateValidation.class);
-	
+
+    /**
+     * Disable SSL Certificate Validation
+     */
 	public static void disable() {
         try {
             SSLContext sslc = SSLContext.getInstance("TLS");

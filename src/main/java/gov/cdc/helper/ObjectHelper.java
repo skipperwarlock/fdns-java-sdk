@@ -34,6 +34,15 @@ public class ObjectHelper extends AbstractHelper {
 	private static String DB;
 	private static String COLLECTION;
 
+	/**
+	 * If authorizationHeader isn't null and if provided header starts with 'Bearer',
+	 * constructs new instance of ObjectHelper class and sets the authorization header to the provided value.
+	 * If authorizationHeader is null or doesn't start with 'Bearer', returns singleton instance of ObjectHelper.
+	 *
+	 * @param authorizationHeader
+	 * @return
+	 * @throws IOException
+	 */
 	public static ObjectHelper getInstance(String authorizationHeader) throws IOException {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (ObjectHelper) createNew().setAuthorizationHeader(authorizationHeader);
@@ -41,6 +50,11 @@ public class ObjectHelper extends AbstractHelper {
 			return getInstance();
 	}
 
+	/**
+	 * ObjectHelper singleton constructor
+	 * @return
+	 * @throws IOException
+	 */
 	public static ObjectHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
@@ -71,10 +85,26 @@ public class ObjectHelper extends AbstractHelper {
 		return helper;
 	}
 
+	/**
+	 * Call Object Service to get object from database using database and collection defined in config-services.properties
+	 *
+	 * @see ObjectHelper#getObject(String, String, String)
+	 *
+	 * @param objectId object ID
+	 * @return response from Object Service containing object details
+	 */
 	public JSONObject getObject(String objectId) {
 		return getObject(objectId, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to get object from database
+	 *
+	 * @param objectId object ID
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from Object Service containing object details
+	 */
 	public JSONObject getObject(String objectId, String db, String collection) {
 		String url = OBJECT_SERVER_URL + GET_OBJECT_PATH;
 		url = url.replace("{db}", db);
@@ -94,10 +124,27 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(body);
 	}
 
+	/**
+	 * Returns true if object exists in database and collection defined in config-services.properties
+	 *
+	 * @see ObjectHelper#exists(String, String, String)
+	 *
+	 * @param objectId object ID
+	 * @return true if object exists
+	 */
 	public boolean exists(String objectId) {
 		return exists(objectId, DB, COLLECTION);
 	}
 
+
+	/**
+	 * Returns true if object exists
+	 *
+	 * @param objectId object ID
+	 * @param db database name
+	 * @param collection collection name
+	 * @return true if object exists
+	 */
 	public boolean exists(String objectId, String db, String collection) {
 		String url = OBJECT_SERVER_URL + GET_OBJECT_PATH;
 		url = url.replace("{db}", db);
@@ -114,10 +161,25 @@ public class ObjectHelper extends AbstractHelper {
 		return true;
 	}
 
+	/**
+	 * Call Object Service to bulk import objects using csv formatted data. Database and Collection values
+	 * defined in config-services.properties
+	 *
+	 * @see ObjectHelper#bulkImport(String, String, String)
+	 *
+	 * @param data csv formatted objects
+	 * @return response from object service
+	 */
 	public JSONObject bulkImport(String data) {
 		return bulkImport(data, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to bulk import objects using csv formatted data.
+	 *
+	 * @param data csv formatted objects
+	 * @return response from object service
+	 */
 	public JSONObject bulkImport(String data, String db, String collection) {
 		String url = OBJECT_SERVER_URL + BULK_IMPORT_PATH;
 		url = url.replace("{db}", db);
@@ -127,18 +189,60 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Call Object Service to create an object. Database and Collection values defined in config-services.properties
+	 *
+	 * @see ObjectHelper#createObject(JSONObject, String)
+	 * @see ObjectHelper#createObject(JSONObject, String, String)
+	 * @see ObjectHelper#createObject(JSONObject, String, String, String)
+	 *
+	 * @param json object data
+	 * @return response from object service with object details
+	 */
 	public JSONObject createObject(JSONObject json) {
 		return createObject(json, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to create an object.
+	 *
+	 * @see ObjectHelper#createObject(JSONObject)
+	 * @see ObjectHelper#createObject(JSONObject, String)
+	 * @see ObjectHelper#createObject(JSONObject, String, String, String)
+	 *
+	 * @param json object data
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from object service with object details
+	 */
 	public JSONObject createObject(JSONObject json, String db, String collection) {
 		return createObject(json, "", db, collection);
 	}
 
+	/**
+	 * Call Object Service to create an object.
+	 *
+	 * @see ObjectHelper#createObject(JSONObject)
+	 * @see ObjectHelper#createObject(JSONObject, String, String)
+	 * @see ObjectHelper#createObject(JSONObject, String, String, String)
+	 *
+	 * @param json object data
+	 * @param id object id
+	 * @return response from object service with object details
+	 */
 	public JSONObject createObject(JSONObject json, String id) {
 		return createObject(json, id, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to create an object
+	 *
+	 * @param json object data
+	 * @param id object id
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from object service with object details
+	 */
 	public JSONObject createObject(JSONObject json, String id, String db, String collection) {
 		String url = OBJECT_SERVER_URL + CREATE_OBJECT_PATH;
 		url = url.replace("{db}", db);
@@ -157,10 +261,27 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Call Object Service to count number of objects in a collection.
+	 * Database and Collection values defined in config-services.properties.
+	 *
+	 * @see ObjectHelper#createObject(JSONObject, String, String)
+	 *
+	 * @param json search query
+	 * @return response from object service with number of objects matching query
+	 */
 	public JSONObject countObjects(JSONObject json) {
 		return countObjects(json, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to count number of objects in a collection.
+	 *
+	 * @param json search query
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from object service with number of objects matching query
+	 */
 	public JSONObject countObjects(JSONObject json, String db, String collection) {
 		String url = OBJECT_SERVER_URL + COUNT_OBJECTS_PATH;
 		url = url.replace("{db}", db);
@@ -170,10 +291,26 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Call Object Service to return aggregate values in a collection
+	 *
+	 * @see ObjectHelper#aggregate(JSONArray, String, String)
+	 *
+	 * @param json search query
+	 * @return object service response containing aggregate values
+	 */
 	public JSONObject aggregate(JSONArray json) {
 		return aggregate(json, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to return aggregate values in a collection
+	 *
+	 * @param json search query
+	 * @param db database name
+	 * @param collection collection name
+	 * @return object service response containing aggregate values
+	 */
 	public JSONObject aggregate(JSONArray json, String db, String collection) {
 		String url = OBJECT_SERVER_URL + AGGREGATE_PATH;
 		url = url.replace("{db}", db);
@@ -183,10 +320,31 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Call Object Service to get distinct values for a specified field across a single collection.
+	 * Database and Collection values defined in config-services.properties.
+	 *
+	 * @see ObjectHelper#distinct(JSONObject, String, String, String)
+	 *
+	 * @param json search query
+	 * @param field field name
+	 * @return response from object service with distinct values for specified field
+	 */
 	public JSONArray distinct(JSONObject json, String field) {
 		return distinct(json, field, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to get distinct values for a specified field across a single collection.
+	 *
+	 * @see ObjectHelper#distinct(JSONObject, String, String, String)
+	 *
+	 * @param json search query
+	 * @param field field name
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from object service with distinct values for specified field
+	 */
 	public JSONArray distinct(JSONObject json, String field, String db, String collection) {
 		String url = OBJECT_SERVER_URL + DISTINCT_PATH;
 		url = url.replace("{db}", db);
@@ -197,14 +355,48 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONArray(response.getBody());
 	}
 
+	/**
+	 * Call Object Service to find objects
+	 * Database and Collection values defined in config-services.properties.
+	 *
+	 * @see ObjectHelper#find(JSONObject, String, String)
+	 * @see ObjectHelper#find(JSONObject, String, String, int, int)
+	 *
+	 * @param json search query
+	 * @return response from object service with matching objects
+	 */
 	public JSONObject find(JSONObject json) {
 		return find(json, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to find objects
+	 *
+	 * @see ObjectHelper#find(JSONObject)
+	 * @see ObjectHelper#find(JSONObject, String, String, int, int)
+	 *
+	 * @param json search query
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from object service with matching objects
+	 */
 	public JSONObject find(JSONObject json, String db, String collection) {
 		return find(json, db, collection, -1, -1);
 	}
 
+	/**
+	 * Call Object Service to find objects
+	 *
+	 * @see ObjectHelper#find(JSONObject)
+	 * @see ObjectHelper#find(JSONObject, String, String)
+	 *
+	 * @param json search query
+	 * @param db database name
+	 * @param collection collection name
+	 * @param from starting point for result set
+	 * @param size limit number of objects to return
+	 * @return response from object service with matching objects
+	 */
 	public JSONObject find(JSONObject json, String db, String collection, int from, int size) {
 		String url = OBJECT_SERVER_URL + FIND_PATH;
 		url = url.replace("{db}", db);
@@ -224,14 +416,48 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Call Object Service to search objects in a specific collection using url parameters instead of json payload
+	 * Database and Collection values defined in config-services.properties.
+	 *
+	 * @see ObjectHelper#search(String, String, String)
+	 * @see ObjectHelper#search(String, String, String, int, int)
+	 *
+	 * @param qs search query
+	 * @return response from object service with matching objects
+	 */
 	public JSONObject search(String qs) {
 		return search(qs, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to search objects in a specific collection using url parameters instead of json payload
+	 *
+	 * @see ObjectHelper#search(String)
+	 * @see ObjectHelper#search(String, String, String, int, int)
+	 *
+	 * @param qs search query
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from object service with matching objects
+	 */
 	public JSONObject search(String qs, String db, String collection) {
 		return search(qs, db, collection, -1, -1);
 	}
 
+	/**
+	 * Call Object Service to search objects in a specific collection using url parameters instead of json payload
+	 *
+	 * @see ObjectHelper#search(String)
+	 * @see ObjectHelper#search(String, String, String)
+	 *
+	 * @param qs search query
+	 * @param db database name
+	 * @param collection collection name
+	 * @param from starting poi9nt of result set
+	 * @param size limit number of objects to return
+	 * @return response from object service with matching objects
+	 */
 	public JSONObject search(String qs, String db, String collection, int from, int size) {
 		String url = OBJECT_SERVER_URL + SEARCH_PATH;
 		url = url.replace("{qs}", qs);
@@ -252,10 +478,27 @@ public class ObjectHelper extends AbstractHelper {
 		return new JSONObject(response.getBody());
 	}
 
+	/**
+	 * Call Object Service to delete object
+	 * Database and Collection values defined in config-services.properties.
+	 *
+	 * @see ObjectHelper#deleteObject(String, String, String)
+	 *
+	 * @param objectId object id
+	 * @return response from object service
+	 */
 	public JSONObject deleteObject(String objectId) {
 		return deleteObject(objectId, DB, COLLECTION);
 	}
 
+	/**
+	 * Call Object Service to delete object
+	 *
+	 * @param objectId object id
+	 * @param db database name
+	 * @param collection collection name
+	 * @return response from object service
+	 */
 	public JSONObject deleteObject(String objectId, String db, String collection) {
 		String url = OBJECT_SERVER_URL + DELETE_OBJECT_PATH;
 		url = url.replace("{db}", db);

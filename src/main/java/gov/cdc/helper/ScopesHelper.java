@@ -14,6 +14,12 @@ public class ScopesHelper extends AbstractHelper {
 	private static String SCOPES_SERVER_URL;
 	private static String GET_SCOPES_PATH;
 
+	/**
+	 * ScopesHelper constructor
+	 *
+	 * @return
+	 * @throws IOException
+	 */
 	public static ScopesHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
@@ -32,6 +38,12 @@ public class ScopesHelper extends AbstractHelper {
 		return helper;
 	}
 
+	/**
+	 * Call Scopes Service to get scopes for provided groups
+	 *
+	 * @param groupNames groups to get scopes for
+	 * @return response from Scopes Service
+	 */
 	public JSONObject getScopes(List<String> groupNames) {
 
 		String url = SCOPES_SERVER_URL + GET_SCOPES_PATH;

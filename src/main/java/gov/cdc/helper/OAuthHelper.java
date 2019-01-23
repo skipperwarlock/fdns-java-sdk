@@ -16,6 +16,12 @@ public class OAuthHelper extends AbstractHelper {
 	private static String REQUEST_TOKEN;
 	private static String SCOPES;
 
+	/**
+	 * OAuthHelper singleton constructor
+	 *
+	 * @return
+	 * @throws IOException
+	 */
 	public static OAuthHelper getInstance() throws IOException {
 		if (instance == null) {
 			instance = createNew();
@@ -35,6 +41,14 @@ public class OAuthHelper extends AbstractHelper {
 		return helper;
 	}
 
+	/**
+	 * Get OAuth access token
+	 *
+	 * @see OAuthHelper#getToken(List)
+	 *
+	 * @return
+	 * @throws IOException
+	 */
 	public String getToken() throws IOException {
 		if (SCOPES != null && !SCOPES.isEmpty())
 			return getToken(Arrays.asList(SCOPES.split(" ")));
@@ -42,6 +56,13 @@ public class OAuthHelper extends AbstractHelper {
 			return getToken(null);
 	}
 
+	/**
+	 * Get OAuth access token
+	 *
+	 * @param scopes list of OAuth scopes
+	 * @return token
+	 * @throws IOException
+	 */
 	public String getToken(List<String> scopes) throws IOException {
 		String token;
 		String url = OAUTH_SERVER_URL + REQUEST_TOKEN;

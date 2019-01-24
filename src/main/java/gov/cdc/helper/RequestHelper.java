@@ -28,10 +28,26 @@ public class RequestHelper extends AbstractHelper {
 
 	private static RequestHelper instance;
 
+	/**
+	 * Create RequestHelper object using Basic authentication
+	 *
+	 * @param username
+	 * @param password
+	 *
+	 * @return
+	 */
 	public static RequestHelper getInstance(String username, String password) {
 		return (RequestHelper) createNew().setAuthorizationHeader("Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes()));
 	}
 
+	/**
+	 * If RequestHelper isn't null and if provided header starts with 'Bearer',
+	 * constructs new instance of RequestHelper class and sets the authorization header to the provided value.
+	 * If authorizationHeader is null or doesn't start with 'Bearer', returns singleton instance of RequestHelper.
+	 *
+	 * @param authorizationHeader
+	 * @return
+	 */
 	public static RequestHelper getInstance(String authorizationHeader) {
 		if (authorizationHeader != null && (authorizationHeader.startsWith("Bearer") || authorizationHeader.startsWith("bearer")))
 			return (RequestHelper) createNew().setAuthorizationHeader(authorizationHeader);
@@ -39,6 +55,11 @@ public class RequestHelper extends AbstractHelper {
 			return getInstance();
 	}
 
+	/**
+	 * RequestHelper singleton constructor
+	 *
+	 * @return
+	 */
 	public static RequestHelper getInstance() {
 		if (instance == null) {
 			instance = createNew();
@@ -46,6 +67,11 @@ public class RequestHelper extends AbstractHelper {
 		return instance;
 	}
 
+	/**
+	 * RequestHelper constructor
+	 *
+	 * @return
+	 */
 	private static RequestHelper createNew() {
 		return new RequestHelper();
 	}
@@ -54,34 +80,94 @@ public class RequestHelper extends AbstractHelper {
 
 	private static final RestTemplate rt = new RestTemplate();
 
+	/**
+	 * Call HTTP GET on url
+	 *
+	 * @param url request url
+	 *
+	 * @return http response
+	 */
 	public ResponseEntity<String> executeGet(String url) {
 		return execute(url, HttpMethod.GET, MediaType.APPLICATION_JSON, null);
 	}
 
+	/**
+	 * Call HTTP POST on url
+	 *
+	 * @param url request url
+	 *
+	 * @return http response
+	 */
 	public ResponseEntity<String> executePost(String url) {
 		return execute(url, HttpMethod.POST, MediaType.TEXT_PLAIN, null);
 	}
 
+	/**
+	 * Call HTTP POST
+	 *
+	 * @param url request url
+	 * @param data plain text payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> executePost(String url, String data) {
 		return execute(url, HttpMethod.POST, MediaType.TEXT_PLAIN, data);
 	}
 
+	/**
+	 * Call HTTP POST
+	 *
+	 * @param url request url
+	 * @param data payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> executePost(String url, MultiValueMap<String, String> data) {
 		return execute(url, HttpMethod.POST, data);
 	}
 
+	/**
+	 * Call HTTP POST
+	 *
+	 * @param url request url
+	 * @param data payload
+	 * @param mediaType payload media type (ex: application/json)
+	 * @return http response
+	 */
 	public ResponseEntity<String> executePost(String url, String data, MediaType mediaType) {
 		return execute(url, HttpMethod.POST, mediaType, data);
 	}
 
+	/**
+	 * Call HTTP PUT
+	 *
+	 * @param url request url
+	 * @param data plain text payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> executePut(String url, String data) {
 		return execute(url, HttpMethod.PUT, MediaType.TEXT_PLAIN, data);
 	}
 
+	/**
+	 * Call HTTP PUT
+	 *
+	 * @param url request url
+	 * @param data payload
+	 * @param mediaType payload media type (ex: application/json)
+	 * @return http response
+	 */
 	public ResponseEntity<String> executePut(String url, String data, MediaType mediaType) {
 		return execute(url, HttpMethod.PUT, mediaType, data);
 	}
 
+	/**
+	 * Make HTTP call using provided method
+	 *
+	 * @param url request url
+	 * @param method request method
+	 * @param contentType payload media type (ex: application/json)
+	 * @param data payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> execute(String url, HttpMethod method, MediaType contentType, String data) {
 		logger.debug("URL: " + url);
 		logger.debug("Method: " + method);
@@ -96,6 +182,14 @@ public class RequestHelper extends AbstractHelper {
 		return rt.exchange(url, method, request, String.class);
 	}
 
+	/**
+	 * Make HTTP call using provided method
+	 *
+	 * @param url request url
+	 * @param method request method
+	 * @param data payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> execute(String url, HttpMethod method, MultiValueMap<String, String> data) {
 		logger.debug("URL: " + url);
 		logger.debug("Method: " + method);
@@ -109,22 +203,69 @@ public class RequestHelper extends AbstractHelper {
 		return rt.exchange(url, method, request, String.class);
 	}
 
+	/**
+	 * Call multipart HTTP POST
+	 *
+	 * @param url request url
+	 * @param fieldName form field name
+	 * @param filename expected file name
+	 * @param data payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> executeMultipartPost(String url, String fieldName, String filename, byte[] data) {
 		return executeMultipart(url, HttpMethod.POST, fieldName, filename, data);
 	}
 
+	/**
+	 * Call multipart HTTP POST
+	 *
+	 * @param url request url
+	 * @param fieldName form field name
+	 * @param filename expected file name
+	 * @param data payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> executeMultipartPost(String url, String fieldName, String filename, String data) {
 		return executeMultipart(url, HttpMethod.POST, fieldName, filename, data);
 	}
 
+	/**
+	 * Call multipart HTTP PUT
+	 *
+	 * @param url request url
+	 * @param fieldName form field name
+	 * @param filename expected file name
+	 * @param data payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> executeMultipartPut(String url, String fieldName, String filename, String data) {
 		return executeMultipart(url, HttpMethod.PUT, fieldName, filename, data);
 	}
 
+	/**
+	 * Call multipart HTTP method
+	 *
+	 * @param url request url
+	 * @param method request method
+	 * @param fieldName form field name
+	 * @param filename expected file name
+	 * @param data payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> executeMultipart(String url, HttpMethod method, String fieldName, String filename, String data) {
 		return executeMultipart(url, method, fieldName, filename, data.getBytes());
 	}
 
+	/**
+	 * Call multipart http method.
+	 *
+	 * @param url request url
+	 * @param method request method
+	 * @param fieldName form field name
+	 * @param filename expected file name
+	 * @param data payload
+	 * @return http response
+	 */
 	public ResponseEntity<String> executeMultipart(String url, HttpMethod method, String fieldName, String filename, byte[] data) {
 		logger.debug("URL: " + url);
 		logger.debug("Method: " + method);
@@ -142,6 +283,16 @@ public class RequestHelper extends AbstractHelper {
 		return rt.exchange(url, method, request, String.class);
 	}
 
+	/**
+	 * Call multipart http method.
+	 *
+	 * @param url request url
+	 * @param method request method
+	 * @param fieldName form field name
+	 * @param filename expected file name
+	 * @param data payload
+	 * @return http response containing byte stream
+	 */
 	public ResponseEntity<byte[]> executeMultipartAndGetBytes(String url, HttpMethod method, String fieldName, String filename, byte[] data) {
 		logger.debug("URL: " + url);
 		logger.debug("Method: " + method);
@@ -159,6 +310,15 @@ public class RequestHelper extends AbstractHelper {
 		return rt.exchange(url, method, request, byte[].class);
 	}
 
+	/**
+	 * Call multipart http method
+	 *
+	 * @param url request url
+	 * @param method request method
+	 * @param fieldName expected file name
+	 * @param resources list of payloads
+	 * @return http response
+	 */
 	public ResponseEntity<String> executeMultipart(String url, HttpMethod method, String fieldName, List<FileMessageResource> resources) {
 		logger.debug("URL: " + url);
 		logger.debug("Method: " + method);
@@ -178,6 +338,13 @@ public class RequestHelper extends AbstractHelper {
 		return rt.exchange(url, method, request, String.class);
 	}
 
+	/**
+	 * Call http method to download binary at url
+	 *
+	 * @param url binary location
+	 * @param method request method
+	 * @return http response containing byte stream
+	 */
 	public ResponseEntity<byte[]> downloadBinary(String url, HttpMethod method) {
 		logger.debug("URL: " + url);
 		logger.debug("Method: " + method);
@@ -193,6 +360,13 @@ public class RequestHelper extends AbstractHelper {
 		return rt.exchange(url, method, entity, byte[].class);
 	}
 
+	/**
+	 * Stream data via http request
+	 *
+	 * @param url request url
+	 * @param method request method
+	 * @param processor
+	 */
 	public void stream(String url, HttpMethod method, StreamProcessor processor) {
 		logger.debug("URL: " + url);
 		logger.debug("Method: " + method);
@@ -208,6 +382,12 @@ public class RequestHelper extends AbstractHelper {
 		rt.execute(url, method, requestCallback, extractor);
 	}
 
+	/**
+	 * Call HTTP DELETE
+	 *
+	 * @param url request url
+	 * @return http response
+	 */
 	public ResponseEntity<String> executeDelete(String url) {
 		return execute(url, HttpMethod.DELETE, MediaType.TEXT_PLAIN, null);
 	}
@@ -223,6 +403,12 @@ public class RequestHelper extends AbstractHelper {
 			this.responseType = responseType;
 		}
 
+		/**
+		 * Sets accept headers for request for all supported media types
+		 *
+		 * @param request http request
+		 * @throws IOException
+		 */
 		@SuppressWarnings("unchecked")
 		public void doWithRequest(ClientHttpRequest request) throws IOException {
 			if (responseType != null) {
@@ -275,6 +461,12 @@ public class RequestHelper extends AbstractHelper {
 			}
 		}
 
+		/**
+		 * Write requestEntity body to request stream
+		 *
+		 * @param httpRequest
+		 * @throws IOException
+		 */
 		@Override
 		@SuppressWarnings("unchecked")
 		public void doWithRequest(ClientHttpRequest httpRequest) throws IOException {

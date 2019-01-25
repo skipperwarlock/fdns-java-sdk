@@ -97,7 +97,7 @@ public class HL7Helper extends AbstractHelper {
 	 * @see HL7Helper#parse(String, String)
 	 *
 	 * @param hl7_message message to parse
-	 * @return
+	 * @return json transformation
 	 */
 	public JSONObject parse(String hl7_message) {
 		return parse(hl7_message, HL7_SPEC);

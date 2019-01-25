@@ -17,6 +17,7 @@ public class StringResponseExtractor implements ResponseExtractor<String> {
 
 	/**
 	 * Constructs a new instance of the StringResponseExtractor class
+	 *
 	 * @param processor
 	 */
 	public StringResponseExtractor(StreamProcessor processor) {
@@ -25,6 +26,7 @@ public class StringResponseExtractor implements ResponseExtractor<String> {
 
 	/**
 	 * Reads response body into processor and returns null
+	 *
 	 * @param response client response to http request
 	 * @return null
 	 * @throws IOException

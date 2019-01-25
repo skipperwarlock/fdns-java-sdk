@@ -22,8 +22,9 @@ public class AbstractMessageHelper {
 
 
 	/**
-	 * Appends Appends exception information to log
-	 * @param log the map with which to store exception details
+	 * Appends exception information to specified map
+	 *
+	 * @param log stores exception details
 	 * @param e exception to be stored in log
 	 */
 	public static void append(Map<String, Object> log, Exception e) {

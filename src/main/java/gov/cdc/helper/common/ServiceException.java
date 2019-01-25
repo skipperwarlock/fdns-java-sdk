@@ -10,7 +10,8 @@ public class ServiceException extends Exception {
 	private final String obj;
 
 	/**
-	 *  Constructs a ServiceException with provided message
+	 * Constructs a new ServiceException with the specified message
+	 *
 	 * @param message string describing exception
 	 */
 	public ServiceException(String message) {
@@ -19,7 +20,8 @@ public class ServiceException extends Exception {
 	}
 
 	/**
-	 * Constructs a ServiceException with provided exception
+	 * Constructs a new ServiceException with the specified exception
+	 *
 	 * @param e exception to be wrapped by ServiceException
 	 */
 	public ServiceException(Exception e) {
@@ -28,7 +30,8 @@ public class ServiceException extends Exception {
 	}
 
 	/**
-	 * Constructs ServiceException with provided JSONObject
+	 * Constructs a new ServiceException with the specified JSONObject
+	 *
 	 * @param obj exception details
 	 */
 	public ServiceException(JSONObject obj) {
@@ -36,7 +39,8 @@ public class ServiceException extends Exception {
 	}
 
 	/**
-	 * Returns ServiceException details if the ServiceException was created with a JSONObjeclt
+	 * Returns ServiceException details if the ServiceException was created with a JSONObject
+	 *
 	 * @return JSONObject details of ServiceException if it was created with JSONObject. Otherwise returns null
 	 * @throws JSONException
 	 */

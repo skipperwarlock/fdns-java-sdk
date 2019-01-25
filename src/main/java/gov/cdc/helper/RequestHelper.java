@@ -257,7 +257,7 @@ public class RequestHelper extends AbstractHelper {
 	}
 
 	/**
-	 * Call multipart http method.
+	 * Call multipart HTTP method.
 	 *
 	 * @param url request url
 	 * @param method request method
@@ -284,7 +284,7 @@ public class RequestHelper extends AbstractHelper {
 	}
 
 	/**
-	 * Call multipart http method.
+	 * Call multipart HTTP method.
 	 *
 	 * @param url request url
 	 * @param method request method
@@ -311,7 +311,7 @@ public class RequestHelper extends AbstractHelper {
 	}
 
 	/**
-	 * Call multipart http method
+	 * Call multipart HTTP method
 	 *
 	 * @param url request url
 	 * @param method request method
@@ -339,7 +339,7 @@ public class RequestHelper extends AbstractHelper {
 	}
 
 	/**
-	 * Call http method to download binary at url
+	 * Call HTTP method to download binary at url
 	 *
 	 * @param url binary location
 	 * @param method request method
@@ -361,7 +361,7 @@ public class RequestHelper extends AbstractHelper {
 	}
 
 	/**
-	 * Stream data via http request
+	 * Stream data via HTTP request
 	 *
 	 * @param url request url
 	 * @param method request method

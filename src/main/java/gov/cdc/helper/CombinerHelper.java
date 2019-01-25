@@ -24,7 +24,7 @@ public class CombinerHelper extends AbstractHelper {
 
 	/**
 	 * If authorizationHeader isn't null and if provided header starts with 'Bearer',
-	 * constructs new instance of CombinerHelper class and sets the authorization header to the provided value.
+	 * constructs new instance of CombinerHelper class and sets the authorization header to the specified value.
 	 * If authorizationHeader is null or doesn't start with 'Bearer', returns singleton instance of combinerHelper.
 	 *
 	 * @param authorizationHeader
@@ -97,8 +97,8 @@ public class CombinerHelper extends AbstractHelper {
 	 * @param targetType target file type (csv or xlsx)
 	 * @param configName name of config combiner should reference for transformation
 	 * @param jsons list of objects containing data to be transformed
-	 * @param orientation
-	 * @param includeHeader
+	 * @param orientation portrait or landscape
+	 * @param includeHeader whether or not to include header
 	 * @return transformed file(s) in format specified in targetType
 	 */
 	public byte[] combine(String targetType, String configName, List<JSONObject> jsons, String orientation, boolean includeHeader) {
@@ -132,6 +132,7 @@ public class CombinerHelper extends AbstractHelper {
 
 	/**
 	 * Execute post call to combiner to create or update configuration
+	 *
 	 * @param configName name of config to create or update
 	 * @param config new config data
 	 * @return response from combiner

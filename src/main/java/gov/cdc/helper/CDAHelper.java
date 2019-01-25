@@ -13,7 +13,7 @@ public class CDAHelper extends AbstractHelper {
 
 	/**
 	 * If authorizationHeader isn't null and if provided header starts with 'Bearer',
-	 * constructs new instance of CDAHelper class and sets the authorization header to the provided value.
+	 * constructs new instance of CDAHelper class and sets the authorization header to the specified value.
 	 * If authorizationHeader is null or doesn't start with 'Bearer', returns singleton instance of CDAHelper.
 	 *
 	 * @param authorizationHeader
@@ -51,7 +51,7 @@ public class CDAHelper extends AbstractHelper {
 	}
 
 	/**
-	 * Send provided CDA message to CDA Utils and return parsed message as JSONObject
+	 * Send specified CDA message to CDA Utils and return parsed message as JSONObject
 	 *
 	 * @param cda_message message to be parsed
 	 * @return parsed cda message

@@ -39,10 +39,10 @@ public class ErrorHandler {
 	}
 
 	/**
-	 * Generate http 404 (Bad Request) or 413 (Payload Too Large) response for provided exception and log data
+	 * Generate http 404 (Bad Request) or 413 (Payload Too Large) response for specified exception and log data
 	 *
 	 * @param e exception to be returned with response
-	 * @param log log data to include in response
+	 * @param log details to include in response
 	 * @return http response with provided exception details and log data
 	 */
 	public ResponseEntity<?> handle(Exception e, Map<String, Object> log) {

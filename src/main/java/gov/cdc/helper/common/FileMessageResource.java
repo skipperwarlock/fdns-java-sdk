@@ -26,6 +26,7 @@ public class FileMessageResource extends ByteArrayResource {
 
 	/**
 	 * Returns filename associated with the {@Link MimeMessage} in the form data
+	 *
 	 * @return filename associated with the {@Link MimeMessage} in the form data
 	 */
 	@Override

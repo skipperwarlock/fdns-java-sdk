@@ -28,7 +28,7 @@ public class HL7Helper extends AbstractHelper {
 
 	/**
 	 * If authorizationHeader isn't null and if provided header starts with 'Bearer',
-	 * constructs new instance of HL7Helper class and sets the authorization header to the provided value.
+	 * constructs new instance of HL7Helper class and sets the authorization header to the specified value.
 	 * If authorizationHeader is null or doesn't start with 'Bearer', returns singleton instance of HL7Helper.
 	 *
 	 * @param authorizationHeader

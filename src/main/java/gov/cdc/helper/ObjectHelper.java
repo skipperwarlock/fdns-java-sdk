@@ -113,12 +113,6 @@ public class ObjectHelper extends AbstractHelper {
 
 		ResponseEntity<String> response = RequestHelper.getInstance(getAuthorizationHeader()).executeGet(url);
 
-		/* Removed so user will receive error from mongo
-		// Some micro services are storing a json object with $ and . in keys,
-		// but it's not supported
-		body = body.replaceAll("__DOLLAR__", "\\$");
-		body = body.replaceAll("__DOT__", "\\.");
-		*/
 		String body = response.getBody();
 
 		return new JSONObject(body);
@@ -249,12 +243,6 @@ public class ObjectHelper extends AbstractHelper {
 		url = url.replace("{collection}", collection);
 		url = url.replace("{id}", id);
 
-		/*Removed so user will receive error from mongo
-		// Some micro services are storing a json object with $ and . in keys,
-		// but it's not supported
-		payloadAsString = payloadAsString.replaceAll("\\$", "__DOLLAR__");
-		payloadAsString = payloadAsString.replaceAll("\\.", "__DOT__");
-		*/
 		String payloadAsString = json.toString();
 
 		ResponseEntity<String> response = RequestHelper.getInstance(getAuthorizationHeader()).executePost(url, payloadAsString, MediaType.APPLICATION_JSON);
@@ -538,12 +526,6 @@ public class ObjectHelper extends AbstractHelper {
 		url = url.replace("{collection}", collection);
 		url = url.replace("{id}", objectId);
 
-		/*Removed so user will receive error from mongo
-		// Some micro services are storing a json object with $ and . in keys,
-		// but it's not supported
-		payloadAsString = payloadAsString.replaceAll("\\$", "__DOLLAR__");
-		payloadAsString = payloadAsString.replaceAll("\\.", "__DOT__");
-		*/
 		String payloadAsString = json.toString();
 
 		// But reapply the _id if it has been changed
